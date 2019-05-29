@@ -37,7 +37,7 @@ t_sim = 1;
 r_sim = 1;
 
 % Parameters
-a = 0.1;
+a = 0.2;
 A = r_sim - a;
 D1 = 1;
 D2 = 1;
@@ -45,11 +45,34 @@ k = 1;
 
 % FD discretisation
 t_nodes = 101;
-r_nodes = 11;
+r_nodes = 21;
+dt = t_sim/(t_nodes-1);
+dr = r_sim/(r_nodes-1);
 t = linspace(0, t_sim, t_nodes);
 r = linspace(0,r_sim, r_nodes);
+aidx = find(r == a); % find index corresponding to edge of bolus
+
+% error handling
+% check that 'a' sits on a node point
+if (isempty(aidx) == 1)
+    fprintf('Bolus edge not on node.\nAdjust "a" or r_nodes.\n');
+else
+    fprintf('Bolus edge is on radial node %1i\n', aidx)
+end
 
 % Initial conditions
-s0 = ones(t,r).*0.1;
-g1_0 = ones(t_nodes,a).*0.1;
-g2_0 = ones(t_nodes,A).*0.1;
+s0 = ones(t_nodes,length(r(1:aidx))).*0.1;
+g1_0 = ones(t_nodes,length(r(1:aidx))).*0.1;
+g2_0 = ones(t_nodes,length(r(aidx:r_nodes))).*0.1;
+
+% Boundary conditions
+% at r = 0; r(1) bolus centre
+% at r = a; r(idxa) bolus edge
+% at r = A; r(r_nodes) fluid edge
+
+% Call to pde solver function
+
+
+
+
+
