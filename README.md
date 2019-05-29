@@ -16,3 +16,8 @@ Some assumptions are made;
     internally is equal to the flux of glucose externally.
   * initial condition for the bolus and surrounding fluid is zero
     glucose.
+
+## Solution procedure
+The model will solve the pdes using explicit finite differences.
+  * time will be approximated using forward difference
+  * space will be approximated using central space
