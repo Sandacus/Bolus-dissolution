@@ -70,7 +70,8 @@ g2_0 = ones(t_nodes,length(r(aidx:r_nodes))).*0.1;
 % at r = a; r(idxa) bolus edge
 % at r = A; r(r_nodes) fluid edge
 
-% Call to pde solver function
+% Call to pde solver function fun_FTCS.m
+
 
 
 
