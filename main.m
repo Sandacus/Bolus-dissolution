@@ -40,7 +40,7 @@ r_sim = 1;
 a = 0.2;
 A = r_sim - a;
 D1 = 1e-3;
-D2 = 1e-10;
+D2 = 1e-5;
 k = 1;
 p = [a, A, D1, D2, k];
 
@@ -63,9 +63,9 @@ else
 end
 
 % Initial conditions
-s0 = ones(1,length(r(1:aidx))).*1;
-g1_0 = ones(1,length(r(1:aidx))).*1;
-g2_0 = ones(1,length(r(aidx:r_nodes))).*1;
+s0 = ones(1,length(r(1:aidx))).*0.1;
+g1_0 = ones(1,length(r(1:aidx))).*0.1;
+g2_0 = ones(1,length(r(aidx+1:r_nodes))).*0.01;
 IC = {s0, g1_0, g2_0};
 
 % Boundary conditions
@@ -75,14 +75,16 @@ IC = {s0, g1_0, g2_0};
 
 % Variables to solve for g1
 g1 = zeros(t_nodes, length(r(1:aidx)));
-var = g1;
+g2 = zeros(t_nodes, length(r(aidx+1:r_nodes)));
+var = {g1,g2};
 
 % Call solver function 
-g1 = fun_FTCS(p, IC, disc, var);
+sol = fun_FTCS(p, IC, disc, var);
 
 % Results & Plotting
 figure(1)
-plot(r(1:aidx),g1(1:10:end,:))
-xlabel('radius')
-ylabel('concentration')
-title('glucose concentration')
+plot(r,sol(1:(t_nodes-1)/2:end,:))
+% xlabel('radius')
+% ylabel('concentration')
+% title('glucose concentration')
+% legend('start', 'middle', 'end')
