@@ -5,7 +5,10 @@
 % Adapted from the "Compendium of PDE's in Matlab"
 
 % Housekeeping
-% to be run after using workspace generated from 'main.m'
+close all; clear; clc
+
+% Run main script first to populate workspace
+main;
 
 % Parameters
 th_nodes = 10;
@@ -36,8 +39,9 @@ th1 = linspace(0, 2*pi, 2*th_nodes);
 
 % Plot dependent variable, u(r,theta) over one quadrant
 % at t=tf
-figure();
-for it=1:20:t_nodes
+h = figure;
+axis tight manual % ensures getframe() returns a consistent size
+for it=1:2:t_nodes
     
     % Create 2D matrix of simulation output data at t(it)
     U0(:,:) = sol(it,:,:);
@@ -57,7 +61,21 @@ for it=1:20:t_nodes
     %colorbar(128); caxis([0,1]); % Add color key
     xlabel('X'); ylabel('Z'); zlabel('u(r,\theta)');
     view([0,90]); % set azimuth and elevation
-
+    
+    drawnow
+    
+    % Capture plot as an image
+    frame = getframe(h);
+    im = frame2im(frame);
+    [imind,cm] = rgb2ind(im,256);
+    
+    % Write to GIF file
+    if it == 1
+        imwrite(imind,cm,'dataviz.gif', 'gif', 'Loopcount', inf);
+    else
+        imwrite(imind,cm,'dataviz.gif', 'gif', 'WriteMode', 'append');
+    end
+    
 end
 
 

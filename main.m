@@ -33,7 +33,7 @@
 close; clear; clc
 
 % Simulation space-time
-t_sim = 1;
+t_sim = 10;
 r_sim = 1;
 
 % Parameters
@@ -41,11 +41,11 @@ a = 0.2;
 A = r_sim - a;
 D1 = 1e-5;
 D2 = 1e-3;
-k = 1e-3;
+k = 1e-6;
 p = [a, A, D1, D2, k];
 
 % FD discretisation
-t_nodes = 101;
+t_nodes = 1001;
 r_nodes = 41;
 dt = t_sim/(t_nodes-1);
 dr = r_sim/(r_nodes-1);
@@ -65,7 +65,7 @@ end
 % Initial conditions
 s0 = ones(1,length(r(1:aidx))).*0.1;
 g1_0 = ones(1,length(r(1:aidx))).*0.01;
-g2_0 = ones(1,length(r(aidx:r_nodes))).*0.01;
+g2_0 = ones(1,length(r(aidx:r_nodes))).*0.001;
 IC = {s0, g1_0, g2_0};
 
 % Boundary conditions
