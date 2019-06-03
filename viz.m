@@ -41,21 +41,21 @@ th1 = linspace(0, 2*pi, 2*th_nodes);
 % at t=tf
 h = figure;
 axis tight manual % ensures getframe() returns a consistent size
-for it=1:2:t_nodes
+for it=1:500:t_nodes
     
     % Create 2D matrix of simulation output data at t(it)
     U0(:,:) = sol(it,:,:);
     
     % Convert results data to be suitable for use with meshgrid using cubic
     % interpolation.
-    U1 = interp2(th,r,U0,Theta1,R1,'cubic');
+    U1 = interp2(th,r,U0,Theta1,R1,'linear');
    
     % Create plot from single quadrant data
     surf(Z1,X1,U1); hold on;
     
     % graph options
     shading interp
-    colormap jet
+    %colormap jet
     axis tight; 
     axis square
     %colorbar(128); caxis([0,1]); % Add color key
@@ -71,9 +71,9 @@ for it=1:2:t_nodes
     
     % Write to GIF file
     if it == 1
-        imwrite(imind,cm,'dataviz.gif', 'gif', 'Loopcount', inf);
+        imwrite(imind,cm,'dataviz.gif', 'gif', 'Delaytime', 0.1, 'Loopcount', inf);
     else
-        imwrite(imind,cm,'dataviz.gif', 'gif', 'WriteMode', 'append');
+        imwrite(imind,cm,'dataviz.gif', 'gif', 'Delaytime', 0.1, 'WriteMode', 'append');
     end
     
 end

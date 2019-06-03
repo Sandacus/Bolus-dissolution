@@ -33,7 +33,7 @@
 close; clear; clc
 
 % Simulation space-time
-t_sim = 10;
+t_sim = 10000;
 r_sim = 1;
 
 % Parameters
@@ -41,11 +41,11 @@ a = 0.2;
 A = r_sim - a;
 D1 = 1e-5;
 D2 = 1e-3;
-k = 1e-6;
+k = 0;
 p = [a, A, D1, D2, k];
 
 % FD discretisation
-t_nodes = 1001;
+t_nodes = 50001;
 r_nodes = 41;
 dt = t_sim/(t_nodes-1);
 dr = r_sim/(r_nodes-1);
@@ -80,7 +80,7 @@ var = {g1,g2};
 
 % Call solver function 
 [g1,g2] = fun_FTCS(p, IC, disc, var);
-sol = [g1(:,1:end-1),g2];
+sol = [g1,g2(:,2:end)];
 
 % Results & Plotting
 figure(1)
