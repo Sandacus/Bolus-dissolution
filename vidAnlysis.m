@@ -7,19 +7,21 @@ clear; close all; clc
 imtool close all;  % Close all imtool figures.
 
 % First, let's read and display the video
-myMoviePlayer = VideoReader('test.mov');
-
-nFrames = myMoviePlayer.CurrentTime;
-vidHeight = myMoviePlayer.Height;
-vidWidth = myMoviePlayer.Width;
+vid = VideoReader('test.mov');
+% Determine how many frames
+%nFrames = vid.NumberOfFrames; % NumberOfFrames being retired
+nFrames = vid.Duration * vid.FrameRate;
+vidHeight = vid.Height;
+vidWidth = vid.Width;
 
 % Preallocate movie structure
-mov(1:nFrames) = struct('cdata', zeros(vidHeight, vidWidth, 1));
+%mov(1:nFrames) = struct('cdata', zeros(vidHeight, vidWidth, 1));
 
 %% Inspect the video
-implay('test.mov');
+%implay('test.mov');
 
 %%
+%{
 % "https://uk.mathworks.com/matlabcentral/answers/
 %                                      13356-separate-the-frames-from-avi-video"
 % Demo macro to extract frames and get frame means from an avi movie
@@ -56,6 +58,7 @@ for frame = 1 : numberOfFrames
     % Convert the image into a "movie frame" structure.
     recalledMovie(frame) = im2frame(thisFrame);
 end
+%}
 
 %% Full Demo macro
 %{

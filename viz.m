@@ -40,7 +40,7 @@ th1 = linspace(0, 2*pi, 2*th_nodes);
 % Plot dependent variable, u(r,theta) over one quadrant
 % at t=tf
 h = figure;
-axis tight manual % ensures getframe() returns a consistent size
+%axis tight manual % ensures getframe() returns a consistent size
 for it=1:500:t_nodes
     
     % Create 2D matrix of simulation output data at t(it)
@@ -49,7 +49,7 @@ for it=1:500:t_nodes
     % Convert results data to be suitable for use with meshgrid using cubic
     % interpolation.
     U1 = interp2(th,r,U0,Theta1,R1,'linear');
-   
+    
     % Create plot from single quadrant data
     surf(Z1,X1,U1); hold on;
     
@@ -61,6 +61,8 @@ for it=1:500:t_nodes
     %colorbar(128); caxis([0,1]); % Add color key
     xlabel('X'); ylabel('Z'); zlabel('u(r,\theta)');
     view([0,90]); % set azimuth and elevation
+   
+    axis equal
     
     drawnow
     
